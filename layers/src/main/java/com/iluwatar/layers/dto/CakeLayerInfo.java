@@ -20,27 +20,41 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.dto;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.util.Optional;
 
 /**
  * 
- * View implementation for displaying cakes
+ * DTO for cake layers
  *
  */
-public class CakeViewImpl implements View {
+public class CakeLayerInfo {
 
-  private static final Logger LOGGER = LoggerFactory.getLogger(CakeViewImpl.class);
+  public final Optional<Long> id;
+  public final String name;
+  public final int calories;
 
-  private CakeBakingService cakeBakingService;
-
-  public CakeViewImpl(CakeBakingService cakeBakingService) {
-    this.cakeBakingService = cakeBakingService;
+  /**
+   * Constructor
+   */
+  public CakeLayerInfo(Long id, String name, int calories) {
+    this.id = Optional.of(id);
+    this.name = name;
+    this.calories = calories;
   }
 
-  public void render() {
-    cakeBakingService.getAllCakes().stream().forEach(cake -> LOGGER.info(cake.toString()));
+  /**
+   * Constructor
+   */
+  public CakeLayerInfo(String name, int calories) {
+    this.id = Optional.empty();
+    this.name = name;
+    this.calories = calories;
+  }
+
+  @Override
+  public String toString() {
+    return String.format("CakeLayerInfo id=%d name=%s calories=%d", id.orElse(-1L), name, calories);
   }
 }

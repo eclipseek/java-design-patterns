@@ -20,44 +20,52 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.dto;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 
- * Service for cake baking operations
+ * DTO for cakes
  *
  */
-public interface CakeBakingService {
+public class CakeInfo {
+
+  public final Optional<Long> id;
+  public final CakeToppingInfo cakeToppingInfo;
+  public final List<CakeLayerInfo> cakeLayerInfos;
 
   /**
-   * Bakes new cake according to parameters
+   * Constructor
    */
-  void bakeNewCake(CakeInfo cakeInfo) throws CakeBakingException;
+  public CakeInfo(Long id, CakeToppingInfo cakeToppingInfo, List<CakeLayerInfo> cakeLayerInfos) {
+    this.id = Optional.of(id);
+    this.cakeToppingInfo = cakeToppingInfo;
+    this.cakeLayerInfos = cakeLayerInfos;
+  }
 
   /**
-   * Get all cakes
+   * Constructor
    */
-  List<CakeInfo> getAllCakes();
+  public CakeInfo(CakeToppingInfo cakeToppingInfo, List<CakeLayerInfo> cakeLayerInfos) {
+    this.id = Optional.empty();
+    this.cakeToppingInfo = cakeToppingInfo;
+    this.cakeLayerInfos = cakeLayerInfos;
+  }
 
   /**
-   * Store new cake topping
+   * Calculate calories
    */
-  void saveNewTopping(CakeToppingInfo toppingInfo);
+  public int calculateTotalCalories() {
+    int total = cakeToppingInfo != null ? cakeToppingInfo.calories : 0;
+    total += cakeLayerInfos.stream().mapToInt(c -> c.calories).sum();
+    return total;
+  }
 
-  /**
-   * Get available cake toppings
-   */
-  List<CakeToppingInfo> getAvailableToppings();
-
-  /**
-   * Add new cake layer
-   */
-  void saveNewLayer(CakeLayerInfo layerInfo);
-
-  /**
-   * Get available cake layers
-   */
-  List<CakeLayerInfo> getAvailableLayers();
+  @Override
+  public String toString() {
+    return String.format("CakeInfo id=%d topping=%s layers=%s totalCalories=%d", id.orElse(-1L),
+        cakeToppingInfo, cakeLayerInfos, calculateTotalCalories());
+  }
 }

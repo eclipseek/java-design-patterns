@@ -20,52 +20,76 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.entity;
 
-import java.util.List;
-import java.util.Optional;
+import com.iluwatar.layers.entity.Cake;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  * 
- * DTO for cakes
+ * CakeLayer entity
  *
  */
-public class CakeInfo {
+@Entity
+public class CakeLayer {
 
-  public final Optional<Long> id;
-  public final CakeToppingInfo cakeToppingInfo;
-  public final List<CakeLayerInfo> cakeLayerInfos;
+  @Id
+  @GeneratedValue
+  private Long id;
 
-  /**
-   * Constructor
-   */
-  public CakeInfo(Long id, CakeToppingInfo cakeToppingInfo, List<CakeLayerInfo> cakeLayerInfos) {
-    this.id = Optional.of(id);
-    this.cakeToppingInfo = cakeToppingInfo;
-    this.cakeLayerInfos = cakeLayerInfos;
+  private String name;
+
+  private int calories;
+
+  @ManyToOne(cascade = CascadeType.ALL)
+  private Cake cake;
+
+  public CakeLayer() {}
+
+  public CakeLayer(String name, int calories) {
+    this.setName(name);
+    this.setCalories(calories);
   }
 
-  /**
-   * Constructor
-   */
-  public CakeInfo(CakeToppingInfo cakeToppingInfo, List<CakeLayerInfo> cakeLayerInfos) {
-    this.id = Optional.empty();
-    this.cakeToppingInfo = cakeToppingInfo;
-    this.cakeLayerInfos = cakeLayerInfos;
+  public Long getId() {
+    return id;
   }
 
-  /**
-   * Calculate calories
-   */
-  public int calculateTotalCalories() {
-    int total = cakeToppingInfo != null ? cakeToppingInfo.calories : 0;
-    total += cakeLayerInfos.stream().mapToInt(c -> c.calories).sum();
-    return total;
+  public void setId(Long id) {
+    this.id = id;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public final void setName(String name) {
+    this.name = name;
+  }
+
+  public int getCalories() {
+    return calories;
+  }
+
+  public final void setCalories(int calories) {
+    this.calories = calories;
   }
 
   @Override
   public String toString() {
-    return String.format("CakeInfo id=%d topping=%s layers=%s totalCalories=%d", id.orElse(-1L),
-        cakeToppingInfo, cakeLayerInfos, calculateTotalCalories());
+    return String.format("id=%s name=%s calories=%d", id, name, calories);
+  }
+
+  public Cake getCake() {
+    return cake;
+  }
+
+  public void setCake(Cake cake) {
+    this.cake = cake;
   }
 }

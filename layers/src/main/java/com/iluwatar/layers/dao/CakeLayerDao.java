@@ -20,20 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.dao;
+
+import com.iluwatar.layers.entity.CakeLayer;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * 
- * Custom exception used in cake baking
+ * CRUD repository for cake layers
  *
  */
-public class CakeBakingException extends Exception {
+@Repository
+public interface CakeLayerDao extends CrudRepository<CakeLayer, Long> {
 
-  private static final long serialVersionUID = 1L;
-
-  public CakeBakingException() {}
-
-  public CakeBakingException(String message) {
-    super(message);
-  }
 }

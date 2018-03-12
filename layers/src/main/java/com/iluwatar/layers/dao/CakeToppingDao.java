@@ -20,74 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.dao;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import com.iluwatar.layers.entity.CakeTopping;
+import org.springframework.data.repository.CrudRepository;
+import org.springframework.stereotype.Repository;
 
 /**
  * 
- * CakeLayer entity
+ * CRUD repository cake toppings
  *
  */
-@Entity
-public class CakeLayer {
+@Repository
+public interface CakeToppingDao extends CrudRepository<CakeTopping, Long> {
 
-  @Id
-  @GeneratedValue
-  private Long id;
-
-  private String name;
-
-  private int calories;
-
-  @ManyToOne(cascade = CascadeType.ALL)
-  private Cake cake;
-
-  public CakeLayer() {}
-
-  public CakeLayer(String name, int calories) {
-    this.setName(name);
-    this.setCalories(calories);
-  }
-
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public final void setName(String name) {
-    this.name = name;
-  }
-
-  public int getCalories() {
-    return calories;
-  }
-
-  public final void setCalories(int calories) {
-    this.calories = calories;
-  }
-
-  @Override
-  public String toString() {
-    return String.format("id=%s name=%s calories=%d", id, name, calories);
-  }
-
-  public Cake getCake() {
-    return cake;
-  }
-
-  public void setCake(Cake cake) {
-    this.cake = cake;
-  }
 }

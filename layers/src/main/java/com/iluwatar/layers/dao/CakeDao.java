@@ -20,17 +20,18 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.dao;
 
+import com.iluwatar.layers.entity.Cake;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
 /**
  * 
- * CRUD repository for cake layers
+ * CRUD repository for cakes
  *
  */
 @Repository
-public interface CakeLayerDao extends CrudRepository<CakeLayer, Long> {
+public interface CakeDao extends CrudRepository<Cake, Long> {
 
 }

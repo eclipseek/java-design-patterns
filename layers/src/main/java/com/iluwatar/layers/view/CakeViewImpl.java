@@ -20,74 +20,28 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
+package com.iluwatar.layers.view;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
+import com.iluwatar.layers.service.CakeBakingService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 
- * CakeTopping entity
+ * View implementation for displaying cakes
  *
  */
-@Entity
-public class CakeTopping {
+public class CakeViewImpl implements View {
 
-  @Id
-  @GeneratedValue
-  private Long id;
+  private static final Logger LOGGER = LoggerFactory.getLogger(CakeViewImpl.class);
 
-  private String name;
+  private CakeBakingService cakeBakingService;
 
-  private int calories;
-
-  @OneToOne(cascade = CascadeType.ALL)
-  private Cake cake;
-
-  public CakeTopping() {}
-
-  public CakeTopping(String name, int calories) {
-    this.setName(name);
-    this.setCalories(calories);
+  public CakeViewImpl(CakeBakingService cakeBakingService) {
+    this.cakeBakingService = cakeBakingService;
   }
 
-  public Long getId() {
-    return id;
-  }
-
-  public void setId(Long id) {
-    this.id = id;
-  }
-
-  public String getName() {
-    return name;
-  }
-
-  public final void setName(String name) {
-    this.name = name;
-  }
-
-  public final int getCalories() {
-    return calories;
-  }
-
-  public void setCalories(int calories) {
-    this.calories = calories;
-  }
-
-  @Override
-  public String toString() {
-    return String.format("id=%s name=%s calories=%d", id, name, calories);
-  }
-
-  public Cake getCake() {
-    return cake;
-  }
-
-  public void setCake(Cake cake) {
-    this.cake = cake;
+  public void render() {
+    cakeBakingService.getAllCakes().stream().forEach(cake -> LOGGER.info(cake.toString()));
   }
 }

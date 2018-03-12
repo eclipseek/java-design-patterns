@@ -20,41 +20,20 @@
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
  * THE SOFTWARE.
  */
-package com.iluwatar.layers;
-
-import java.util.Optional;
+package com.iluwatar.layers.exception;
 
 /**
  * 
- * DTO for cake toppings
+ * Custom exception used in cake baking
  *
  */
-public class CakeToppingInfo {
+public class CakeBakingException extends Exception {
 
-  public final Optional<Long> id;
-  public final String name;
-  public final int calories;
+  private static final long serialVersionUID = 1L;
 
-  /**
-   * Constructor
-   */
-  public CakeToppingInfo(Long id, String name, int calories) {
-    this.id = Optional.of(id);
-    this.name = name;
-    this.calories = calories;
-  }
+  public CakeBakingException() {}
 
-  /**
-   * Constructor
-   */
-  public CakeToppingInfo(String name, int calories) {
-    this.id = Optional.empty();
-    this.name = name;
-    this.calories = calories;
-  }
-
-  @Override
-  public String toString() {
-    return String.format("CakeToppingInfo id=%d name=%s calories=%d", id.orElse(-1L), name, calories);
+  public CakeBakingException(String message) {
+    super(message);
   }
 }
